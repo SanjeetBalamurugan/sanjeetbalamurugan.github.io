@@ -23,6 +23,8 @@ body {
   color: var(--text-color);
   margin: 0;
   padding: 20px;
+  font-size: 16px; /* base font size for desktop */
+  line-height: 1.6;
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -46,6 +48,7 @@ header img {
 
 h1 {
   margin: 0;
+  font-size: 2rem; /* desktop heading size */
 }
 
 #theme-toggle {
@@ -112,9 +115,39 @@ h1 {
   color: var(--link-color);
 }
 
-/* Responsive for mobile */
+/* Responsive adjustments for mobile */
 @media (max-width: 600px) {
-  .header-top {
-    flex-direction: column;
+  body {
+    font-size: 14px; /* smaller base font */
+  }
+
+  h1 {
+    font-size: 1.6rem; /* smaller heading */
+  }
+
+  header img {
+    width: 120px;
+    height: 120px;
+  }
+
+  #repo-container {
+    grid-template-columns: 1fr; /* single column on mobile */
+    gap: 12px;
+  }
+
+  #theme-toggle {
+    padding: 5px 8px;
+  }
+
+  .repo-card a {
+    font-size: 1rem;
+  }
+
+  .repo-desc {
+    font-size: 0.85em;
+  }
+
+  .repo-stars {
+    font-size: 0.8em;
   }
 }
