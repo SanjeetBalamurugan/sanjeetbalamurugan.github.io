@@ -10,15 +10,11 @@ themeToggle.addEventListener('click', () => {
 });
 
 window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    const maxShrink = 60;
-    const initialHeight = 90;
-    const newHeight = Math.max(initialHeight - scrollY / 10, maxShrink);
-    hero.style.height = `${newHeight}vh`;
-    const scale = Math.max(1 - scrollY / 500, 0.35);
-    hero.querySelector('img').style.width = `${120 * scale}px`;
-    hero.querySelector('img').style.height = `${120 * scale}px`;
-    hero.querySelector('h1').style.fontSize = `${2.8 * scale}rem`;
+    if(window.scrollY > 50){
+        hero.classList.add('shrink');
+    } else {
+        hero.classList.remove('shrink');
+    }
 });
 
 fetch(`https://api.github.com/users/${username}`)
@@ -32,17 +28,17 @@ fetch(`https://api.github.com/users/${username}`)
 fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`)
     .then(res => res.json())
     .then(repos => {
-        if (!Array.isArray(repos)) return;
-        repos.forEach((repo, i) => {
+        if(!Array.isArray(repos)) return;
+        repos.forEach((repo,i)=>{
             const card = document.createElement('div');
             card.classList.add('repo-card');
             const a = document.createElement('a');
             a.href = repo.html_url;
             a.textContent = repo.name;
-            a.target = "_blank";
+            a.target="_blank";
             const desc = document.createElement('div');
             desc.classList.add('repo-desc');
-            desc.textContent = repo.description ? repo.description : '';
+            desc.textContent = repo.description?repo.description:'';
             const stars = document.createElement('div');
             stars.classList.add('repo-stars');
             stars.textContent = `★ ${repo.stargazers_count}`;
@@ -50,8 +46,8 @@ fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`
             card.appendChild(desc);
             card.appendChild(stars);
             repoContainer.appendChild(card);
-            setTimeout(() => { card.classList.add('fade-in'); }, i * 100);
+            setTimeout(()=>{card.classList.add('fade-in');},i*100);
         });
-        setTimeout(() => { repoContainer.classList.add('fade-in'); }, 50);
+        setTimeout(()=>{repoContainer.classList.add('fade-in');},50);
     })
-    .catch(err => console.error('Error fetching repos:', err));
+    .catch(err=>console.error('Error fetching repos:',err));
