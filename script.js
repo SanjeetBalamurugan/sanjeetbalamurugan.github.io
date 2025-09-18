@@ -4,14 +4,13 @@ const profileImg = document.getElementById('profile-img');
 const usernameEl = document.getElementById('username');
 const repoContainer = document.getElementById('repo-container');
 const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
 
-// Toggle light/dark mode
+// Theme toggle with animated sun/moon
 themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('light');
 });
 
-// Fetch GitHub profile info
+// Fetch GitHub profile
 fetch(`https://api.github.com/users/${username}`)
   .then(res => res.json())
   .then(user => {
@@ -39,7 +38,7 @@ fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`
 
       const desc = document.createElement('div');
       desc.classList.add('repo-desc');
-      desc.textContent = repo.description ? repo.description.substring(0, 80) : '';
+      desc.textContent = repo.description ? repo.description : '';
 
       const stars = document.createElement('div');
       stars.classList.add('repo-stars');
