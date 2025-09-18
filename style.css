@@ -32,22 +32,45 @@ body {
     height: 90vh;
     width: 100%;
     text-align: center;
-    scroll-snap-align: start;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--bg-color);
+    transition: height 0.5s ease, padding 0.5s ease;
+}
+.hero.shrink {
+    height: 60px;
+    padding: 0 20px;
+    align-items: center;
 }
 .hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    transition: all 0.5s ease;
+}
+.hero.shrink .hero-content {
+    flex-direction: row;
+    gap: 10px;
 }
 header img {
     border-radius: 50%;
     width: 120px;
     height: 120px;
+    transition: width 0.5s ease, height 0.5s ease;
+}
+.hero.shrink header img {
+    width: 40px;
+    height: 40px;
 }
 h1 {
     margin: 0;
     font-size: 2.8rem;
+    transition: font-size 0.5s ease;
+}
+.hero.shrink h1 {
+    font-size: 1.2rem;
 }
 #theme-toggle {
     background: var(--card-bg);
@@ -80,7 +103,6 @@ body:not(.light) #theme-icon {
     display: flex;
     flex-direction: column;
     align-items: center;
-    scroll-snap-align: start;
 }
 #repo-container {
     display: grid;
