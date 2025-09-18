@@ -10,11 +10,15 @@ themeToggle.addEventListener('click', () => {
 });
 
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        hero.classList.add('shrink');
-    } else {
-        hero.classList.remove('shrink');
-    }
+    const scrollY = window.scrollY;
+    const maxShrink = 60;
+    const initialHeight = 90;
+    const newHeight = Math.max(initialHeight - scrollY / 10, maxShrink);
+    hero.style.height = `${newHeight}vh`;
+    const scale = Math.max(1 - scrollY / 500, 0.35);
+    hero.querySelector('img').style.width = `${120 * scale}px`;
+    hero.querySelector('img').style.height = `${120 * scale}px`;
+    hero.querySelector('h1').style.fontSize = `${2.8 * scale}rem`;
 });
 
 fetch(`https://api.github.com/users/${username}`)
@@ -26,10 +30,7 @@ fetch(`https://api.github.com/users/${username}`)
     .catch(err => console.error('Error fetching profile:', err));
 
 fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`)
-    .then(res => {
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        return res.json();
-    })
+    .then(res => res.json())
     .then(repos => {
         if (!Array.isArray(repos)) return;
         repos.forEach((repo, i) => {
