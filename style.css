@@ -28,27 +28,24 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 90vh;
     width: 100%;
+    height: 90vh;
     padding: 0 40px;
     box-sizing: border-box;
-    text-align: center;
-    position: relative;
     transition: all 0.3s ease;
+}
+.hero.shrink {
+    height: 80px;
+    padding: 0 40px;
 }
 .hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 15px;
+    flex: 1;
     transition: all 0.3s ease;
-}
-.hero.shrink {
-    height: 80px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 40px;
 }
 .hero.shrink .hero-content {
     flex-direction: row;
@@ -68,6 +65,7 @@ html, body {
 .hero h1 {
     font-size: 2.8rem;
     margin: 0;
+    white-space: nowrap;
     transition: all 0.3s ease;
 }
 .hero.shrink h1 {
