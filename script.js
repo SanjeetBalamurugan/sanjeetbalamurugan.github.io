@@ -3,9 +3,20 @@ const profileImg = document.getElementById('profile-img');
 const usernameEl = document.getElementById('username');
 const repoContainer = document.getElementById('repo-container');
 const themeToggle = document.getElementById('theme-toggle');
+const hero = document.querySelector('.hero');
+
 themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light');
 });
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        hero.classList.add('shrink');
+    } else {
+        hero.classList.remove('shrink');
+    }
+});
+
 fetch(`https://api.github.com/users/${username}`)
     .then(res => res.json())
     .then(user => {
@@ -13,6 +24,7 @@ fetch(`https://api.github.com/users/${username}`)
         usernameEl.textContent = user.name || user.login;
     })
     .catch(err => console.error('Error fetching profile:', err));
+
 fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`)
     .then(res => {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
