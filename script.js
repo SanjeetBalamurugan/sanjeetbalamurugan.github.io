@@ -1,160 +1,44 @@
-:root {
-    --bg-color: #1e1e2e;
-    --text-color: #cdd6f4;
-    --card-bg: #313244;
-    --card-hover: #45475a;
-    --link-color: #89b4fa;
-    --link-hover: #b4f9f8;
-}
-body.light {
-    --bg-color: #f5e0dc;
-    --text-color: #4c4f69;
-    --card-bg: #f2d5cf;
-    --card-hover: #f5e0dc;
-    --link-color: #458588;
-    --link-hover: #83c092;
-}
-body {
-    font-family: 'Space Mono', monospace;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-    line-height: 1.6;
-    transition: background-color 0.3s, color 0.3s;
-    scroll-behavior: smooth;
-}
-.hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-    width: 100%;
-    text-align: center;
-    scroll-snap-align: start;
-}
-.hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-header img {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-}
-h1 {
-    margin: 0;
-    font-size: 2.8rem;
-}
-#theme-toggle {
-    background: var(--card-bg);
-    border: none;
-    border-radius: 5px;
-    padding: 8px 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: background 0.3s;
-}
-#theme-toggle:hover {
-    background: var(--card-hover);
-}
-#theme-icon {
-    transition: transform 0.5s ease, fill 0.5s ease;
-    cursor: pointer;
-    fill: var(--text-color);
-}
-body.light #theme-icon {
-    transform: rotate(40deg);
-    fill: #f5c518;
-}
-body:not(.light) #theme-icon {
-    transform: rotate(0deg);
-    fill: #cdd6f4;
-}
-.repos-section {
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    scroll-snap-align: start;
-}
-#repo-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-    width: 100%;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.repo-card {
-    background-color: var(--card-bg);
-    padding: 15px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 130px;
-    box-sizing: border-box;
-    transition: background 0.3s;
-}
-.repo-card:hover {
-    background-color: var(--card-hover);
-}
-.repo-card a {
-    color: var(--link-color);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1em;
-    word-break: break-word;
-}
-.repo-desc {
-    margin-top: 8px;
-    color: var(--text-color);
-    font-size: 0.9em;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.repo-stars {
-    margin-top: 8px;
-    font-size: 0.85em;
-    color: var(--link-color);
-}
-.fade-in {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-@media (max-width: 600px) {
-    header img {
-        width: 100px;
-        height: 100px;
-    }
-    h1 {
-        font-size: 2rem;
-    }
-    #theme-toggle {
-        padding: 6px 10px;
-    }
-    #repo-container {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-    .repo-card a {
-        font-size: 1rem;
-    }
-    .repo-desc {
-        font-size: 0.85em;
-        -webkit-line-clamp: 3;
-    }
-    .repo-stars {
-        font-size: 0.8em;
-    }
-}
+const username = "SanjeetBalamurugan";
+const profileImg = document.getElementById('profile-img');
+const usernameEl = document.getElementById('username');
+const repoContainer = document.getElementById('repo-container');
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+});
+fetch(`https://api.github.com/users/${username}`)
+    .then(res => res.json())
+    .then(user => {
+        profileImg.src = user.avatar_url;
+        usernameEl.textContent = user.name || user.login;
+    })
+    .catch(err => console.error('Error fetching profile:', err));
+fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`)
+    .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+    })
+    .then(repos => {
+        if (!Array.isArray(repos)) return;
+        repos.forEach((repo, i) => {
+            const card = document.createElement('div');
+            card.classList.add('repo-card');
+            const a = document.createElement('a');
+            a.href = repo.html_url;
+            a.textContent = repo.name;
+            a.target = "_blank";
+            const desc = document.createElement('div');
+            desc.classList.add('repo-desc');
+            desc.textContent = repo.description ? repo.description : '';
+            const stars = document.createElement('div');
+            stars.classList.add('repo-stars');
+            stars.textContent = `★ ${repo.stargazers_count}`;
+            card.appendChild(a);
+            card.appendChild(desc);
+            card.appendChild(stars);
+            repoContainer.appendChild(card);
+            setTimeout(() => { card.classList.add('fade-in'); }, i * 100);
+        });
+        setTimeout(() => { repoContainer.classList.add('fade-in'); }, 50);
+    })
+    .catch(err => console.error('Error fetching repos:', err));
