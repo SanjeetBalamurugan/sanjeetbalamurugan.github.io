@@ -18,26 +18,20 @@ html, body {
     height: 100%;
     margin: 0;
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
     font-family: 'Space Mono', monospace;
     background-color: var(--bg-color);
     color: var(--text-color);
 }
 .hero {
-    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    scroll-snap-align: start;
-    transition: all 0.5s ease;
-}
-.hero.shrink {
-    height: 60px;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 20px;
+    height: 90vh;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    transition: height 0.5s ease, padding 0.5s ease;
 }
 .hero-content {
     display: flex;
@@ -46,28 +40,16 @@ html, body {
     gap: 15px;
     transition: all 0.5s ease;
 }
-.hero.shrink .hero-content {
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-}
 header img {
     border-radius: 50%;
     width: 120px;
     height: 120px;
     transition: width 0.5s ease, height 0.5s ease;
 }
-.hero.shrink header img {
-    width: 40px;
-    height: 40px;
-}
 h1 {
-    margin: 0;
     font-size: 2.8rem;
+    margin: 0;
     transition: font-size 0.5s ease;
-}
-.hero.shrink h1 {
-    font-size: 1.2rem;
 }
 #theme-toggle {
     background: var(--card-bg);
@@ -96,9 +78,7 @@ body:not(.light) #theme-icon {
     fill: #cdd6f4;
 }
 .repos-section {
-    min-height: 100vh;
     padding: 40px 20px;
-    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     align-items: center;
