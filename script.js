@@ -4,8 +4,9 @@ const profileImg = document.getElementById('profile-img');
 const usernameEl = document.getElementById('username');
 const repoContainer = document.getElementById('repo-container');
 const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
 
-// Toggle theme
+// Toggle light/dark mode
 themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('light');
 });
