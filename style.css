@@ -1,0 +1,105 @@
+:root {
+  /* Catppuccin Mocha colors for dark mode */
+  --bg-color: #1e1e2e;
+  --text-color: #cdd6f4;
+  --card-bg: #313244;
+  --card-hover: #45475a;
+  --link-color: #89b4fa;
+  --link-hover: #b4f9f8;
+}
+
+body.light {
+  --bg-color: #f5e0dc;
+  --text-color: #4c4f69;
+  --card-bg: #f2d5cf;
+  --card-hover: #f5e0dc;
+  --link-color: #458588;
+  --link-hover: #83c092;
+}
+
+body {
+  font-family: 'Space Mono', monospace;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  text-align: center;
+}
+
+.header-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+header img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+h1 {
+  margin: 0;
+}
+
+#theme-toggle {
+  padding: 6px 12px;
+  background: var(--card-bg);
+  border: none;
+  border-radius: 5px;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+#theme-toggle:hover {
+  background: var(--card-hover);
+}
+
+#repo-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.repo-card {
+  background-color: var(--card-bg);
+  padding: 15px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.repo-card:hover {
+  background-color: var(--card-hover);
+}
+
+.repo-card a {
+  color: var(--link-color);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.repo-card a:hover {
+  color: var(--link-hover);
+}
+
+.repo-desc {
+  margin-top: 8px;
+  color: var(--text-color);
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.repo-stars {
+  margin-top: 8px;
+  font-size: 0.85em;
+  color: var(--link-color);
+}
