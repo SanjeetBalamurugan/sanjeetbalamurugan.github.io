@@ -5,15 +5,20 @@ const repoContainer = document.getElementById('repo-container');
 const themeToggle = document.getElementById('theme-toggle');
 const hero = document.querySelector('.hero');
 
+if(localStorage.getItem('theme') === 'light'){
+    document.body.classList.add('light');
+}
+
 themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light');
+    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
 });
 
+let hasShrunk = false;
 window.addEventListener('scroll', () => {
-    if(window.scrollY > 50){
+    if(window.scrollY > 50 && !hasShrunk){
         hero.classList.add('shrink');
-    } else {
-        hero.classList.remove('shrink');
+        hasShrunk = true;
     }
 });
 
